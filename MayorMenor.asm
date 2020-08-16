@@ -27,7 +27,6 @@ call minus
 call greater
 
 
-
 minus proc
     mov bx, 0200h
     begin:
