@@ -23,41 +23,89 @@ mov [0213h], 00C5h
 mov [0214h], 0018h
 
 
-mov ch, 14h ; 20 decimal
-mov bx, 0200h
+call minus
+call greater
 
 
-begin:
-    mov cl, 14h ; 20 decimal 
-    mov dl, 00h
-    mov al, [bx]
-    push bx
+
+minus proc
     mov bx, 0200h
-    jmp step1
+    begin:
+        mov cl, 14h ; 20 decimal 
+        mov dl, 00h
+        mov al, [bx]
+        push bx
+        mov bx, 0200h
+        jmp step1
+    
+    step1:
+        mov ah, [bx]
+        cmp al, ah 
+        jb Menor
+        dec cl
+        jz Comparar
+        inc bx
+        jnl step1
+        
+    Menor:
+        inc dl 
+        inc bx
+        dec cl
+        jz Comparar
+        jmp step1 
+        
+    Comparar:
+        cmp dl, 13h ; 19 decimal
+        jz final
+        pop bx
+        inc bx
+        jmp begin
+        
+    final:
+        mov [0220h],al
+        pop bx
+        mov [0221h],bx
+        
+    ret
+minus endp
 
-step1:
-    mov ah, [bx]
-    cmp al, ah 
-    jb Menor
-    dec cl
-    jz Comparar
-    inc bx
-    jnl step1
+greater proc
+    mov bx, 0200h
+    begin2:
+        mov cl, 14h ; 20 decimal 
+        mov dl, 00h
+        mov al, [bx]
+        push bx
+        mov bx, 0200h
+        jmp step2
     
-Menor:
-    inc dl 
-    inc bx
-    dec cl
-    jz Comparar
-    jmp step1 
-    
-Comparar:
-    cmp dl, 13h ; 19 decimal
-    jz final:
-    pop bx
-    inc bx
-    jmp begin
-final:
-    mov ch, 01h
-    
-ret
+    step2:
+        mov ah, [bx]
+        cmp al, ah 
+        ja Mayor
+        dec cl
+        jz Comparar2
+        inc bx
+        jnl step2
+        
+    Mayor:
+        inc dl 
+        inc bx
+        dec cl
+        jz Comparar2
+        jmp step2 
+        
+    Comparar2:
+        cmp dl, 13h ; 19 decimal
+        jz final2
+        pop bx
+        inc bx
+        jmp begin2
+        
+    final2:
+        mov [0223h],al
+        pop bx
+        mov [0224h],bx
+        
+    ret
+greater endp
