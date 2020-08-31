@@ -19,7 +19,7 @@ step0:
     div dl
     mov [bx+10h],al
     mov al, ah
-    mov ah, 00
+    mov ah, 00h
     mul cl
     div dl
     mov [bx+11h], al

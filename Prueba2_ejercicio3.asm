@@ -1,7 +1,7 @@
 org 100h
 mov [0200h], 0000h
 mov [0202h], 0001h
-mov [0204h], 0015h ; ejemplo con 21
+mov [0204h], 0013h ; ejemplo con 21
 mov ax, [0200h]
 mov bx, [0202h]
 mov bp, [0204h]  

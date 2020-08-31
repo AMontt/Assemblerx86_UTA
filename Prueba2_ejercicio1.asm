@@ -39,7 +39,7 @@ step0:
     inc cl
     cmp cl, 13h
     jng step0
-
+    ret
 step1:
     push dx
     push bx
